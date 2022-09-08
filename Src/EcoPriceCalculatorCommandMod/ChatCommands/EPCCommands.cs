@@ -39,22 +39,12 @@ namespace EPC.CommandMod.ChatCommands
         public static void ListStores(User user) => new ListStoresCommand().Invoke(user);
 
         /// <summary>
-        /// List all stores with belonging prices that are selling the item
+        /// Lists all stores selling the item or tag with their prices for it.
         /// </summary>
         /// <param name="user">Calling user</param>
-        /// <param name="itemName">The name of the item</param>
-
-        [ChatSubCommand("EPC", "List all stores + prices selling the specific item", "ItemSales", ChatAuthorizationLevel.User)]
-        public static void ListItemPrices(User user, string itemName) => new ListItemPricesCommand(itemName).Invoke(user);
-
-        /// <summary>
-        /// List all stores with belonging prices that are selling the tag
-        /// </summary>
-        /// <param name="user">Calling user</param>
-        /// <param name="tag">Tag</param>
-
-        [ChatSubCommand("EPC", "List all stores + prices selling the tag", "TagSales", ChatAuthorizationLevel.User)]
-        public static void ListTagPrices(User user, string tag) => new ListTagPricesCommand(tag).Invoke(user);
+        /// <param name="itemOrTag">The item or tag to look for</param>
+        [ChatSubCommand("EPC", "List all stores selling the item/tag and their price", "ListSales", ChatAuthorizationLevel.User)]
+        public static void ListPrices(User user, string itemOrTag) => new ListPricesCommand(itemOrTag).Invoke(user);
 
         /// <summary>
         /// List the ingredients required to craft using this recipe, will list the ingredients per available work station to the user
