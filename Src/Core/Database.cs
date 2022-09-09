@@ -28,7 +28,7 @@ namespace EPC.Core
 
         public IGameItem NameToItem(string name)
         {
-            var matchingNames = AllItems.Where(i => i.ReadableName.Equals(name, StringComparison.OrdinalIgnoreCase));
+            var matchingNames = AllItems.Where(i => i.ReadableName.Equals(name, StringComparison.OrdinalIgnoreCase) || (i.ReadableName + "s").Equals(name, StringComparison.OrdinalIgnoreCase));
 
             if (matchingNames.Count() == 0)
             {
