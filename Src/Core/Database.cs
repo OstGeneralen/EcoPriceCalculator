@@ -1,9 +1,10 @@
-﻿using EPC.Core.Exceptions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using EPC.Core.Exceptions;
 using EPC.Core.Item;
 using EPC.Core.Recipe;
 using EPC.Core.Store;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace EPC.Core
 {
@@ -12,7 +13,7 @@ namespace EPC.Core
         public IEnumerable<IPlayerStore> AllStores { get; private set; }
         public IEnumerable<IGameItem> AllItems { get; }
         public IEnumerable<ICraftRecipe> AllRecipes { get; }
-        
+
         public Database(IEnumerable<IGameItem> items, IEnumerable<ICraftRecipe> recipes, IEnumerable<IPlayerStore> stores)
         {
             AllItems = items;
@@ -27,9 +28,9 @@ namespace EPC.Core
 
         public IGameItem NameToItem(string name)
         {
-            var matchingNames = AllItems.Where(i => i.ReadableName == name);
+            var matchingNames = AllItems.Where(i => i.ReadableName.Equals(name, StringComparison.OrdinalIgnoreCase) || (i.ReadableName + "s").Equals(name, StringComparison.OrdinalIgnoreCase));
 
-            if(matchingNames.Count() == 0)
+            if (matchingNames.Count() == 0)
             {
                 throw new ItemNotFoundException(name);
             }
@@ -39,11 +40,11 @@ namespace EPC.Core
 
         public ICraftRecipe NameToRecipe(string name)
         {
-            var matchingNames = AllRecipes.Where(r => r.ReadableName == name);
+            var matchingNames = AllRecipes.Where(r => r.ReadableName.Equals(name, StringComparison.OrdinalIgnoreCase));
 
-            if(matchingNames.Count() == 0)
+            if (matchingNames.Count() == 0)
             {
-                throw new RecipeNotFoundException("Recipe");
+                throw new RecipeNotFoundException(name);
             }
 
             return matchingNames.First();
