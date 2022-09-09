@@ -44,7 +44,7 @@ namespace EPC.Core
 
             if (matchingNames.Count() == 0)
             {
-                throw new RecipeNotFoundException("Recipe");
+                throw new RecipeNotFoundException(name);
             }
 
             return matchingNames.First();
